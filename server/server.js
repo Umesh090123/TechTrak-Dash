@@ -45,7 +45,12 @@ app.use("/sales", salesRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 9000;
-const DB = 'mongodb+srv://dashboard:techtracking@cluster0.fhk3txy.mongodb.net/?retryWrites=true&w=majority';
+
+if (process.env.NODE_ENV === 'production'){
+  app.use(express.static('client/build'));  
+}
+
+const DB = process.env.MONGO_URL;
 mongoose
   .connect(DB)
   .then(() => {
